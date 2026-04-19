@@ -23,13 +23,13 @@ async function Dashboard() {
   const { userId } = await auth();
   if (!userId) return;
 
-  const chatbots: any = userId && (await getChatBotByUser(userId));
-  const sortedBots =
-    chatbots &&
-    [...chatbots]?.sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-    );
+  // const chatbots: any = userId && (await getChatBotByUser(userId));
+  // const sortedBots =
+  //   chatbots &&
+  //   [...chatbots]?.sort(
+  //     (a, b) =>
+  //       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  //   );
 
   return (
     <div className='mt-14  w-full md:max-w-3xl md:mx-auto lg:max-w-5xl lg:mx-auto p-5 '>
