@@ -15,9 +15,11 @@ app
     const httpServer = createServer(handler);
 
     const io = new Server(httpServer, {
+      path: "/api/socket",
       cors: {
-        origin: ["https://www.quiksbot.com/", "https://quiksbot.com"],
-
+        origin: dev
+          ? ["http://localhost:3000", "http://0.0.0.0:3000"]
+          : ["https://www.quiksbot.com", "https://www.quiksbot.com/", "https://quiksbot.com"],
         methods: ["GET", "POST"],
         allowedHeaders: ["Content-Type", "Authorization"],
       },

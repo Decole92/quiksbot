@@ -427,6 +427,7 @@ export const deleteBot = async (sourceId: string, chatbot: any) => {
 
   if (!userId || !chatbot?.id) {
     console.error("Invalid parameters provided");
+    return { completed: false, error: "Invalid parameters" };
   }
 
   try {

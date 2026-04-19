@@ -260,7 +260,16 @@ export const deleteBot = mutation({
           .query("chatMessages")
           .withIndex("by_chatRoomId", (q) => q.eq("chatRoomId", room._id))
           .collect();
-        await Promise.all(msgs.map((m) => ctx.db.delete(m._id)));
+        for (const m of msgs) {
+          if (m.imageStorageId) {
+            try {
+              await ctx.storage.delete(m.imageStorageId);
+            } catch {
+              // file may already be deleted; continue
+            }
+          }
+          await ctx.db.delete(m._id);
+        }
         await ctx.db.delete(room._id);
       }
       await ctx.db.delete(customer._id);
