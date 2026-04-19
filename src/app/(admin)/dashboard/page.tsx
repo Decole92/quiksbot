@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { Plus } from "lucide-react";
 
 import Link from "next/link";
-
+import { Suspense } from "react";
 import ConfettiComponent from "@/components/thanks";
 import { Metadata } from "next";
 import { getChatBotByUser } from "@/actions/bot";
@@ -35,7 +35,9 @@ async function Dashboard() {
 
   return (
     <div className='mt-14  w-full md:max-w-3xl md:mx-auto lg:max-w-5xl lg:mx-auto p-5 '>
-      <ConfettiComponent />
+      <Suspense fallback={null}>
+        <ConfettiComponent />
+      </Suspense>
       <div className='flex justify-between items-center mb-5 md:mt-5 p-5 shadow-md  shadow-gray-100 w-full dark:shadow-gray-900 '>
         <h1 className='text-xl lg:text-3xl font-thin text-[#E1B177]'>
           Chatbots List
