@@ -6,6 +6,10 @@ import Link from "next/link";
 
 import ConfettiComponent from "@/components/thanks";
 import { Metadata } from "next";
+import { getChatBotByUser } from "@/actions/bot";
+import Image from "next/image";
+import Avatar from "@/components/Avatar";
+import { characteristic } from "../../../../typing";
 
 export const metadata: Metadata = {
   title: "Quiksbot | Dashboard",
@@ -18,16 +22,16 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 async function Dashboard() {
-  // const { userId } = await auth();
-  // if (!userId) return;
+  const { userId } = await auth();
+  if (!userId) return;
 
-  // const chatbots: any = userId && (await getChatBotByUser(userId));
-  // const sortedBots =
-  //   chatbots &&
-  //   [...chatbots]?.sort(
-  //     (a, b) =>
-  //       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-  //   );
+  const chatbots: any = userId && (await getChatBotByUser(userId));
+  const sortedBots =
+    chatbots &&
+    [...chatbots]?.sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    );
 
   return (
     <div className='mt-14  w-full md:max-w-3xl md:mx-auto lg:max-w-5xl lg:mx-auto p-5 '>
@@ -49,7 +53,7 @@ async function Dashboard() {
         </Button>
       </div>
 
-      {/* {chatbots?.length === 0 && (
+      {chatbots?.length === 0 && (
         <div className='text-black flex flex-col w-full items-center text-center p-10 dark:text-gray-400'>
           <p>
             You have not created any chatbots yet, Create a new chatbot by
@@ -82,7 +86,7 @@ async function Dashboard() {
                 </div>
 
                 <p className='absolute top-5 right-5 text-xs text-gray-400'>
-                  Created: {new Date(chatbot.createdAt).toLocaleString()}
+                  Created: {new Date(chatbot.createdAt).toLocaleString('en-US')}
                 </p>
 
                 <hr className='mt-2' />
@@ -106,13 +110,13 @@ async function Dashboard() {
                       {chatbot?.Source?.characteristic
                         ?.map(
                           (character: characteristic) =>
-                            character?.characteristic
+                            character?.characteristic,
                         )
                         .join("").length > 0
                         ? chatbot?.Source?.characteristic
                             ?.map(
                               (character: characteristic) =>
-                                character?.characteristic
+                                character?.characteristic,
                             )
                             .join("").length
                         : 0}{" "}
@@ -149,7 +153,7 @@ async function Dashboard() {
             </li>
           </Link>
         ))}
-      </ul> */}
+      </ul>
     </div>
   );
 }

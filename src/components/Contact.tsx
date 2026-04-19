@@ -155,7 +155,7 @@ export default function ContactList() {
                           <td className='py-3 px-4 text-gray-500'>
                             {contact?.acquired}
                           </td>
-                          <td className='py-3 px-4 text-gray-500 '>
+                          <td className='py-3 px-4 text-gray-500' suppressHydrationWarning>
                             {contact.createdAt &&
                               new Date(contact?.createdAt).toLocaleString()}
                           </td>

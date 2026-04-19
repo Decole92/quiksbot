@@ -85,7 +85,7 @@ const ChatCard = ({ customer, isLive }: Props) => {
               </div>
             )}
           </div>
-          <div className='text-xs text-muted-foreground absolute top-2 left-5'>
+          <div className='text-xs text-muted-foreground absolute top-2 left-5' suppressHydrationWarning>
             {lastChatRoomEntry?.createdAt
               ? new Date(lastChatRoomEntry.createdAt).toLocaleDateString()
               : ""}
@@ -128,7 +128,7 @@ const ChatCard = ({ customer, isLive }: Props) => {
                 </div>
               )}
             </div>
-            <div className='text-xs text-muted-foreground absolute top-2 right-3'>
+            <div className='text-xs text-muted-foreground absolute top-2 right-3' suppressHydrationWarning>
               {lastChatRoomEntry?.createdAt
                 ? new Date(lastChatRoomEntry.createdAt).toLocaleDateString()
                 : ""}

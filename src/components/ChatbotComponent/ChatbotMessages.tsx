@@ -133,7 +133,7 @@ const ChatbotMessages = ({
               isSender ? "chat-start" : "chat-end"
             } relative py-5 dark:text-gray-200`}
           >
-            <p className='absolute -bottom-2 text-xs text-gray-300'>
+            <p className='absolute -bottom-2 text-xs text-gray-300' suppressHydrationWarning>
               Sent {new Date(message?.createdAt).toLocaleString()}
             </p>
 
