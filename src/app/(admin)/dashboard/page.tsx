@@ -1,11 +1,9 @@
-import { getChatBotByUser } from "@/actions/bot";
-import Avatar from "@/components/Avatar";
 import { Button } from "@/components/ui/button";
 import { auth } from "@clerk/nextjs/server";
 import { Plus } from "lucide-react";
-import Image from "next/image";
+
 import Link from "next/link";
-import { characteristic } from "../../../../typing";
+
 import ConfettiComponent from "@/components/thanks";
 import { Metadata } from "next";
 
@@ -20,8 +18,8 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 async function Dashboard() {
-  const { userId } = await auth();
-  if (!userId) return;
+  // const { userId } = await auth();
+  // if (!userId) return;
 
   // const chatbots: any = userId && (await getChatBotByUser(userId));
   // const sortedBots =
