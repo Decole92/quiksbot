@@ -85,14 +85,14 @@ export default async function RootLayout({
                 className='w-full max-w-sm mx-auto '
               />
 
-              <script
+              {/* <script
                 src='https://www.quiksbot.com/api/chatbotWidget?id=8e2f1bb5-2c1d-40b7-a912-0439bf0eeceb'
                 data-name='quiksbot'
                 data-address='https://www.quiksbot.com'
                 data-widget-size='normal'
                 data-widget-button-size='normal'
                 defer
-              ></script>
+              ></script> */}
             </ThemeProvider>
           </ConvexClerkProvider>
         </body>
