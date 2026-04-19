@@ -317,7 +317,7 @@ function General({ chatbot }: { chatbot: any }) {
                         height={100}
                         className=' rounded-full h-24 w-22 '
                       />
-                    ) : chatbot && chatbot?.icon !== null ? (
+                    ) : chatbot?.icon ? (
                       <Image
                         src={chatbot?.icon!}
                         alt={chatbot?.icon!}
