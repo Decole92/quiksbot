@@ -6,6 +6,7 @@ import { BASE_URL } from "../../constant/url";
 // server where there is no socket.io listener.
 const createSocket = (): Socket => {
   const s = io(BASE_URL, {
+    path: "/api/socket",
     reconnection: true,
     reconnectionAttempts: 10,
     reconnectionDelay: 1000,
