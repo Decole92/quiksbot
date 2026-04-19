@@ -28,7 +28,7 @@ async function Dashboard() {
     chatbots &&
     [...chatbots]?.sort(
       (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
     );
 
   return (
@@ -51,7 +51,7 @@ async function Dashboard() {
         </Button>
       </div>
 
-      {chatbots?.length === 0 && (
+      {/* {chatbots?.length === 0 && (
         <div className='text-black flex flex-col w-full items-center text-center p-10 dark:text-gray-400'>
           <p>
             You have not created any chatbots yet, Create a new chatbot by
@@ -151,7 +151,7 @@ async function Dashboard() {
             </li>
           </Link>
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 }
