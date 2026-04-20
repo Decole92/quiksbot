@@ -29,22 +29,13 @@
 // }
 
 // export default Adminlayout;
+
 import Header from "@/components/Header";
 import Sidebar from "@/components/SideMenu/Sidebar";
 import { Toaster } from "@/components/ui/toaster";
-import { auth } from "@clerk/nextjs/server";
-import { RedirectToSignIn } from "@clerk/nextjs";
 import React from "react";
 
-async function AdminLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
-  const { userId } = await auth();
-
-  if (!userId) {
-    return <RedirectToSignIn />;
-  }
-
+function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className='min-h-screen bg-background'>
       <Header />
