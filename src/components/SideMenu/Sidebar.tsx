@@ -1,16 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useGlobalStore } from "@/store/globalStore";
+// import { useGlobalStore } from "@/store/globalStore";
 import MaxMenu from "./MaxMenu";
 import MinMenu from "./MinMenu";
 
 function Sidebar() {
   const [mounted, setMounted] = useState(false);
-  const [isExtended, setIsExtended] = useGlobalStore((state) => [
-    state.isExtended,
-    state.setIsExtended,
-  ]);
+  const isExtended = true;
+  // const [isExtended, setIsExtended] = useGlobalStore((state) => [
+  //   state.isExtended,
+  //   state.setIsExtended,
+  // ]);
 
   useEffect(() => {
     setMounted(true);
@@ -18,7 +19,7 @@ function Sidebar() {
 
   if (!mounted) {
     return (
-      <div className="bg-gray-100 dark:bg-gray-900 md:min-h-screen h-full p-7 fixed z-20 w-20" />
+      <div className='bg-gray-100 dark:bg-gray-900 md:min-h-screen h-full p-7 fixed z-20 w-20' />
     );
   }
 
