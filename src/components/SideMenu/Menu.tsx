@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { MailWarning, Inbox } from "lucide-react";
 
-import DashboardIcon from "../../../constant/icons/DashboardIcon";
+// import DashboardIcon from "../../../constant/icons/DashboardIcon";
 import { MenuTypes } from "../../../typing";
 
 export const SIDE_BAR_MENU: MenuTypes[] = [
