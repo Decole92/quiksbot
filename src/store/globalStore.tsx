@@ -1,90 +1,61 @@
 import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
 import { Contact } from "../../typing";
 
-interface BoardState {
-  userPosition: {
-    lat: number | null;
-    lng: number | null;
-  };
+interface UIState {
+  isOpen: boolean;
+  setIsOpen: (v: boolean) => void;
 
-  setUserPosition: (newPosition: { lat: number; lng: number }) => void;
+  isExtended: boolean;
+  setIsExtended: (v: boolean) => void;
+
+  feedback: boolean;
+  setFeedback: (v: boolean) => void;
+
+  subject: string;
+  setSubject: (v: string) => void;
+
+  userPosition: { lat: number | null; lng: number | null };
+  setUserPosition: (pos: { lat: number; lng: number }) => void;
+
+  position: { lat: string; lng: string; address: string };
+  setPosition: (pos: { lat: string; lng: string; address: string }) => void;
+
+  // Shared UI coordination state
+  selectedChatRoomId: string | null;
+  setSelectedChatRoomId: (id: string | null) => void;
+
+  chatId: string;
+  setChatId: (id: string) => void;
 
   contactList: Contact[];
   setContactList: (contactList: Contact[]) => void;
-
-  position: {
-    lat: string;
-    lng: string;
-    address: string;
-  };
-  setPosition: (newLocal: {
-    lat: string;
-    lng: string;
-    address: string;
-  }) => void;
-
-  isExtended: boolean;
-  setIsExtended: (isExtended: boolean) => void;
-
-  bot: any | null;
-  setBot: (bot: any) => void;
-
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
-  chatRoom: any | null;
-  setChatRoom: (chatRoom: any) => void;
-  selectedChatRoomId: string | null;
-  setSelectedChatRoomId: (id: string | null) => void;
-  chatId: string;
-  setChatId: (id: string) => void;
-  feedback: boolean;
-  setFeedback: (feed: boolean) => void;
-  subject: string;
-  setSubject: (subject: string) => void;
 }
 
-export const useGlobalStore = create<BoardState>()(
-  devtools(
-    persist(
-      (set) => ({
-        contactList: [],
-        setContactList: (contactList: Contact[]) => set({ contactList }),
+export const useGlobalStore = create<UIState>()((set) => ({
+  isOpen: false,
+  setIsOpen: (isOpen) => set({ isOpen }),
 
-        userPosition: { lat: null, lng: null },
-        setUserPosition: (newUser) => set({ userPosition: newUser }),
+  isExtended: false,
+  setIsExtended: (isExtended) => set({ isExtended }),
 
-        position: { lat: "", lng: "", address: "" },
-        setPosition: (newLocal) => set({ position: newLocal }),
+  feedback: false,
+  setFeedback: (feedback) => set({ feedback }),
 
-        isExtended: false,
-        setIsExtended: (isExtended) => set({ isExtended }),
+  subject: "",
+  setSubject: (subject) => set({ subject }),
 
-        bot: null,
-        setBot: (bot) => set({ bot }),
+  userPosition: { lat: null, lng: null },
+  setUserPosition: (userPosition) => set({ userPosition }),
 
-        isOpen: false,
-        setIsOpen: (isOpen) => set({ isOpen }),
+  position: { lat: "", lng: "", address: "" },
+  setPosition: (position) => set({ position }),
 
-        chatRoom: null,
-        setChatRoom: (chatRoom) => set({ chatRoom }),
+  selectedChatRoomId: null,
+  setSelectedChatRoomId: (id) => set({ selectedChatRoomId: id }),
 
-        selectedChatRoomId: null,
-        setSelectedChatRoomId: (id) => set({ selectedChatRoomId: id }),
+  chatId: "",
+  setChatId: (chatId) => set({ chatId }),
 
-        chatId: "",
-        setChatId: (chatId) => set({ chatId }),
-
-        feedback: false,
-        setFeedback: (feedback) => set({ feedback }),
-
-        subject: "",
-        setSubject: (subject) => set({ subject }),
-      }),
-      {
-        name: "saasStorage",
-        skipHydration: true,
-      },
-    ),
-  ),
-);
+  contactList: [],
+  setContactList: (contactList) => set({ contactList }),
+}));

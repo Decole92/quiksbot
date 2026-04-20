@@ -1,20 +1,19 @@
 "use client";
 
 import { ChevronsLeft, ChevronsRight, Zap } from "lucide-react";
-import React, { useState } from "react";
+import React from "react";
 import { SIDE_BAR_MENU } from "./Menu";
 import { usePathname, useRouter } from "next/navigation";
-// import { useGlobalStore } from "@/store/globalStore";
+import { useGlobalStore } from "@/store/globalStore";
 import Link from "next/link";
 import { MenuTypes } from "../../../typing";
 
 function MaxMenu() {
   const router = useRouter();
-  // const [isExtended, setIsExtended] = useGlobalStore((state) => [
-  //   state.isExtended,
-  //   state.setIsExtended,
-  // ]);
-  const [isExtended, setIsExtended] = useState(false);
+  const [isExtended, setIsExtended] = useGlobalStore((state) => [
+    state.isExtended,
+    state.setIsExtended,
+  ]);
 
   const pathname = usePathname();
   return (
