@@ -44,7 +44,7 @@ function Connect({ chatbot }: { chatbot: any }) {
     const value = address;
     setAddress("");
     startTransition(async () => {
-      const promise = blockAddress(value, chatbot);
+      const promise = blockAddress(value, { id: chatbot?.id });
       toast.promise(promise, {
         loading: `whitelistening path ${value} ...`,
         success: `${value} whitelistend`,

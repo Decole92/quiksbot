@@ -79,23 +79,21 @@ export default async function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <MailCampaignProvider>
-                {children}
-              </MailCampaignProvider>
+              <MailCampaignProvider>{children}</MailCampaignProvider>
 
               <Toaster
                 position='bottom-center'
                 className='w-full max-w-sm mx-auto '
               />
 
-              {/* <script
-                src='https://www.quiksbot.com/api/chatbotWidget?id=8e2f1bb5-2c1d-40b7-a912-0439bf0eeceb'
+              <script
+                src='https://www.quiksbot.com/api/chatbotWidget?id=k57153sfyvs1jtp31840fvz10h856xeb'
                 data-name='quiksbot'
                 data-address='https://www.quiksbot.com'
                 data-widget-size='normal'
                 data-widget-button-size='normal'
                 defer
-              ></script> */}
+              ></script>
             </ThemeProvider>
           </ConvexClerkProvider>
         </body>

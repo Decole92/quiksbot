@@ -137,7 +137,7 @@ export const getBlocks = async (id: string) => {
     const getAddresses = await fetchQuery(api.chatbots.getBlockPagesByChatbotId, {
       chatbotId: id as any,
     });
-    return getAddresses;
+    return getAddresses?.map((page: any) => ({ ...page, id: page._id }));
   } catch (err) {
     throw new Error(
       "error occurs while try to fetch blocks address",
