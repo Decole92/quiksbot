@@ -30,8 +30,8 @@
 
 // export default Adminlayout;
 
-import Header from "@/components/Header";
-import Sidebar from "@/components/SideMenu/Sidebar";
+// import Header from "@/components/Header";
+// import Sidebar from "@/components/SideMenu/Sidebar";
 
 import { Toaster } from "@/components/ui/toaster";
 import React from "react";
@@ -39,9 +39,9 @@ import React from "react";
 function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className='min-h-screen bg-background'>
-      <Header />
+      {/* <Header /> */}
       <div className='flex w-full'>
-        <Sidebar />
+        {/* <Sidebar /> */}
         <main className='flex-1'>
           <div className='w-full md:min-h-screen h-full flex flex-col pl-16 md:pl-4'>
             {children}
