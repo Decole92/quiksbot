@@ -25,7 +25,7 @@ import "draft-js/dist/Draft.css";
 import { useUser } from "@clerk/nextjs";
 import useSWR from "swr";
 import { getCustomers } from "@/actions/customer";
-import { useGlobalStore } from "@/store/globalStore";
+import { useMailCampaign } from "@/context/MailCampaignContext";
 
 import { toast } from "sonner";
 import { stateToHTML } from "draft-js-export-html";
@@ -83,14 +83,7 @@ function DraftComponent({ integrate }: { integrate: boolean }) {
     user ? `/api/getCampaign/${user?.id}` : null,
     user ? async () => await getCampaign(user?.id) : null
   );
-  const [contactList, setContactList, subject, setSubject] = useGlobalStore(
-    (state) => [
-      state.contactList,
-      state.setContactList,
-      state.subject,
-      state.setSubject,
-    ]
-  );
+  const { contactList, setContactList, subject, setSubject } = useMailCampaign();
 
   const [showEmailList, setShowEmailList] = useState(false);
   const [isPending, startTransition] = useTransition();

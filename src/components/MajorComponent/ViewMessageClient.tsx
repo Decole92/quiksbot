@@ -2,7 +2,6 @@
 import React, { useEffect, useState, useTransition } from "react";
 import type { ChatBot, ChatMessage } from "@/types";
 import { Separator } from "../ui/separator";
-import { useGlobalStore } from "@/store/globalStore";
 import ChatbotMessages from "../ChatbotComponent/ChatbotMessages";
 import ChatbotHeader from "../ChatbotComponent/ChatbotHeader";
 import ChatbotInput from "../ChatbotComponent/chatbotInput";
@@ -82,8 +81,6 @@ function ViewMessageClient({
     `/api/getCustomers/${user?.id}`,
     user ? async () => await getUserCustomers(user?.id) : null
   );
-  const setChatId = useGlobalStore((state) => state.setChatId);
-
   const handleDeleteChat = async () => {
     setOpenModel(false);
 
@@ -100,7 +97,6 @@ function ViewMessageClient({
       if (fetch?.completed) {
         await getAll(getUserCustomers(user?.id!));
       }
-      setChatId("");
       router.push("/chatlogs");
     });
   };

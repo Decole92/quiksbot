@@ -3,29 +3,26 @@ import type { ChatMessage } from "@/types";
 import { Button } from "../ui/button";
 import { getChatMessages, getChatRoom } from "@/actions/chat";
 
-import { useGlobalStore } from "@/store/globalStore";
 import { sendMessage } from "@/actions/chat/sendMessage";
 import useSWR from "swr";
 
 type Props = {
   firstQuestion: any[];
-
   chatbot: any;
   chatId: string;
   messages?: any[];
   setMessages?: React.Dispatch<React.SetStateAction<ChatMessage[]>>;
+  setChatId?: (id: string) => void;
 };
 
 function SuggestItems({
   firstQuestion,
-
   chatbot,
   chatId,
-
   setMessages,
+  setChatId,
 }: Props) {
   const [isLoading, startTransition] = useTransition();
-  const setChatId = useGlobalStore((state) => state.setChatId);
 
   const { data: chatMessages, mutate } = useSWR(
     chatId ? `/getMessages/${chatId}` : null,
@@ -109,7 +106,7 @@ function SuggestItems({
         );
 
         if (result?.chatRoomId && isFirstMessage) {
-          setChatId(result.chatRoomId);
+          if (setChatId) setChatId(result.chatRoomId);
         }
         if (isFirstMessage) {
           const updatedMessages = [

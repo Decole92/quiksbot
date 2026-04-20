@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState, useTransition } from "react";
 import { ChatMessage } from "@/types";
 import { Button } from "../ui/button";
 import { MicIcon, ImagePlusIcon, Send, XIcon } from "lucide-react";
-import { useGlobalStore } from "@/store/globalStore";
 import useSWR from "swr";
 import { getChatMessages, getChatRoom } from "@/actions/chat";
 import { sendMessage } from "@/actions/chat/sendMessage";
@@ -19,7 +18,7 @@ interface ChatbotInputProps {
   chatbot: any;
   type: "user" | "ai";
   isPageLoading?: boolean;
-
+  setChatId?: (id: string) => void;
   setMessages?: React.Dispatch<React.SetStateAction<ChatMessage[]>>;
 }
 
@@ -28,7 +27,7 @@ const ChatbotInput: React.FC<ChatbotInputProps> = ({
   chatbot,
   type,
   isPageLoading,
-
+  setChatId,
   setMessages,
 }) => {
   const [isPending, startTransition] = useTransition();
@@ -38,11 +37,6 @@ const ChatbotInput: React.FC<ChatbotInputProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [transport, setTransport] = useState("N/A");
-  const [isOpen, setIsOpen, setChatId] = useGlobalStore((state) => [
-    state.isOpen,
-    state.setIsOpen,
-    state.setChatId,
-  ]);
 
   const { data: chatMessages, mutate } = useSWR(
     chatRoomId ? `/getMessages/${chatRoomId}` : null,
@@ -178,7 +172,7 @@ const ChatbotInput: React.FC<ChatbotInputProps> = ({
         );
 
         if (result?.chatRoomId && isFirstMessage) {
-          setChatId(result.chatRoomId);
+          if (setChatId) setChatId(result.chatRoomId);
         }
 
         if (isFirstMessage) {

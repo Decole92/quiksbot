@@ -9,7 +9,6 @@ import { getBot } from "@/actions/bot";
 import ChatbotMessages from "@/components/ChatbotComponent/ChatbotMessages";
 import ChatbotInput from "@/components/ChatbotComponent/chatbotInput";
 import SuggestItems from "@/components/ChatbotComponent/SuggestItems";
-import { useGlobalStore } from "@/store/globalStore";
 
 import { socket } from "@/lib/socket";
 import useFcmToken from "@/hook/useFcmToken";
@@ -19,19 +18,12 @@ function ChatbotPage({ params }: { params: any }) {
   const { id } = React.use<{ id: string }>(params);
   const [isPending, startChatting] = useTransition();
   const { token } = useFcmToken();
+  const [chatId, setChatId] = useState("");
+  const [feedback, setFeedback] = useState(false);
+
   const { data: bot } = useSWR(
     "/getbot",
     id ? async () => await getBot(id) : null
-  );
-
-  const [isOpen, setIsOpen, chatId, setChatId, feedback] = useGlobalStore(
-    (state) => [
-      state.isOpen,
-      state.setIsOpen,
-      state.chatId,
-      state.setChatId,
-      state.feedback,
-    ]
   );
 
   const {
@@ -45,7 +37,7 @@ function ChatbotPage({ params }: { params: any }) {
   const [localMessages, setLocalMessages] = useState<ChatMessage[]>([]);
   const { data: chatRoom, mutate: setChatRoom } = useSWR(
     chatId ? `/getChatRoom/${chatId}` : null,
-    async () => (chatId !== null ? await getChatRoom(chatId) : null)
+    async () => (chatId !== "" ? await getChatRoom(chatId) : null)
   );
 
   useEffect(() => {
@@ -58,21 +50,17 @@ function ChatbotPage({ params }: { params: any }) {
     };
     fetchMessages();
   }, [chatId]);
+
   useEffect(() => {
     if (!chatId) return;
     const fetchMessages = async () => {
       const getRoom = await setChatRoom(getChatRoom(chatId));
-
       if (getRoom === null) {
         setChatId("");
       }
     };
     fetchMessages();
   }, [chatId]);
-
-  useEffect(() => {
-    setIsOpen(bot?.getDetails!);
-  }, [id, bot]);
 
   useEffect(() => {
     if (!chatRoom?.live || !chatId) return;
@@ -126,6 +114,8 @@ function ChatbotPage({ params }: { params: any }) {
             live={chatRoom?.live}
             messages={localMessages}
             setLocalMessages={setLocalMessages}
+            setChatId={setChatId}
+            setFeedback={setFeedback}
           />
 
           <div className='flex-1 overflow-y-auto'>
@@ -144,6 +134,7 @@ function ChatbotPage({ params }: { params: any }) {
                 chatbot={bot!}
                 chatId={chatId!}
                 setMessages={setLocalMessages}
+                setChatId={setChatId}
               />
             )}
             <ChatbotInput
@@ -152,6 +143,7 @@ function ChatbotPage({ params }: { params: any }) {
               type='user'
               isPageLoading={isPending}
               setMessages={setLocalMessages}
+              setChatId={setChatId}
             />
           </div>
         </div>

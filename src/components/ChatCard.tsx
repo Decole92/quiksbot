@@ -5,7 +5,7 @@ import Avatar from "./Avatar";
 
 import Image from "next/image";
 
-import { useGlobalStore } from "@/store/globalStore";
+import { useChatlog } from "@/context/ChatlogContext";
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -35,9 +35,7 @@ type Props = {
 };
 
 const ChatCard = ({ customer, isLive }: Props) => {
-  const [selectedChatRoomId, setSelectedChatRoomId] = useGlobalStore(
-    (state) => [state?.selectedChatRoomId, state.setSelectedChatRoomId],
-  );
+  const { selectedChatRoomId, setSelectedChatRoomId } = useChatlog();
   const router = useRouter();
   const lastChatRoomEntry = customer?.chatRoom?.[customer.chatRoom.length - 1];
 
@@ -104,7 +102,6 @@ const ChatCard = ({ customer, isLive }: Props) => {
               : "bg-white dark:bg-gray-950"
           }`}
         >
-          {/* Bot Icon or Avatar on the left */}
           <div className='flex-shrink-0'>
             {customer?.botIcon ? (
               <Image

@@ -4,17 +4,16 @@ import { ChevronsLeft, ChevronsRight, Zap } from "lucide-react";
 import React from "react";
 import { SIDE_BAR_MENU } from "./Menu";
 import { usePathname, useRouter } from "next/navigation";
-import { useGlobalStore } from "@/store/globalStore";
 import Link from "next/link";
 import { MenuTypes } from "../../../typing";
 
-function MaxMenu() {
-  const router = useRouter();
-  const [isExtended, setIsExtended] = useGlobalStore((state) => [
-    state.isExtended,
-    state.setIsExtended,
-  ]);
+interface MaxMenuProps {
+  isExtended: boolean;
+  setIsExtended: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
+function MaxMenu({ isExtended, setIsExtended }: MaxMenuProps) {
+  const router = useRouter();
   const pathname = usePathname();
   return (
     <div className='text-black  pt-24 w-[200px]'>

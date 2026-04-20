@@ -1,17 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useGlobalStore } from "@/store/globalStore";
 import MaxMenu from "./MaxMenu";
 import MinMenu from "./MinMenu";
 
 function Sidebar() {
   const [mounted, setMounted] = useState(false);
-  // const isExtended = true;
-  const [isExtended, setIsExtended] = useGlobalStore((state) => [
-    state.isExtended,
-    state.setIsExtended,
-  ]);
+  const [isExtended, setIsExtended] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -29,7 +24,11 @@ function Sidebar() {
         isExtended ? "w-64" : "w-20"
       }`}
     >
-      {isExtended ? <MaxMenu /> : <MinMenu />}
+      {isExtended ? (
+        <MaxMenu isExtended={isExtended} setIsExtended={setIsExtended} />
+      ) : (
+        <MinMenu isExtended={isExtended} setIsExtended={setIsExtended} />
+      )}
     </div>
   );
 }

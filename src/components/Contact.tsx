@@ -9,15 +9,12 @@ import { getCustomers } from "@/actions/customer";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import MailCampaign from "./MailCampaign";
 import { getCampaign } from "@/actions/campaign";
-import { useGlobalStore } from "@/store/globalStore";
+import { useMailCampaign } from "@/context/MailCampaignContext";
 
 export default function ContactList() {
   const [activeTab, setActiveTab] = useState("contacts");
   const [searchTerm, setSearchTerm] = useState("");
-  const [contactList, setContactList] = useGlobalStore((state) => [
-    state.contactList,
-    state.setContactList,
-  ]);
+  const { contactList, setContactList } = useMailCampaign();
   const { user } = useUser();
 
   const { data: allCustomerContacts, isLoading: loading } = useSWR(

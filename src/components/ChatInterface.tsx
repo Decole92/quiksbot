@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useTransition } from "react";
 import type { ChatBot, ChatMessage } from "@/types";
 import { Separator } from "./ui/separator";
-import { useGlobalStore } from "@/store/globalStore";
+import { useChatlog } from "@/context/ChatlogContext";
 import ChatbotMessages from "./ChatbotComponent/ChatbotMessages";
 import ChatbotHeader from "./ChatbotComponent/ChatbotHeader";
 import ChatbotInput from "./ChatbotComponent/chatbotInput";
@@ -47,13 +47,7 @@ function ChatInterface() {
   const { token } = useFcmToken();
   const { user } = useUser();
 
-  const [selectedChatRoomId, setSelectedChatRoomId, setChatId] = useGlobalStore(
-    (state) => [
-      state.selectedChatRoomId,
-      state.setSelectedChatRoomId,
-      state.setChatId,
-    ]
-  );
+  const { selectedChatRoomId, setSelectedChatRoomId } = useChatlog();
 
   const { data: chatMessages, mutate } = useSWR(
     selectedChatRoomId ? `/getMessages/${selectedChatRoomId}` : null,
@@ -90,17 +84,11 @@ function ChatInterface() {
     user ? async () => await getUserCustomers(user?.id) : null
   );
 
-  // const userDetails = {
-  //   name: chatRoom?.Customer?.name!,
-  //   email: chatRoom?.Customer?.email,
-  // };
-
   const handleDeleteChat = async () => {
     setOpenModel(false);
     const id = selectedChatRoomId;
 
     setSelectedChatRoomId(null);
-    setChatId("");
 
     startDeleting(async () => {
       const del = deleteChatRoomById(id!);
@@ -146,14 +134,11 @@ function ChatInterface() {
     if (!chatRoom?.live || !selectedChatRoomId) return;
 
     const handleNewMessage = async (data: any) => {
-      // Prevent duplicate messages
       if (chatMessages?.some((message: any) => message.id === data.id)) return;
 
-      // Always fetch fresh messages to ensure consistency
       await mutate(getChatMessages(selectedChatRoomId));
       const updatedMessages = await getChatMessages(selectedChatRoomId);
 
-      // Extract the last message (newest) from the updated list
       const lastMessage = updatedMessages?.[updatedMessages.length - 1];
       if (!lastMessage) return;
       await fetch("/send-notification", {
@@ -208,7 +193,6 @@ function ChatInterface() {
             </DialogHeader>
             <div className='flex items-center space-x-2'>
               <Button
-                // className=' w-full text-gray-500 bg-gray-100 hover:bg-black hover:text-white  '
                 className=' w-full text-gray-500 bg-gray-100 dark:bg-transparent hover:bg-black hover:text-white  '
                 onClick={() => setOpenModel(false)}
               >
@@ -216,7 +200,6 @@ function ChatInterface() {
               </Button>
               <Button
                 onClick={() => handleDeleteChat()}
-                // variant='destructive'
                 className='px-3 w-full bg-red-500 hover:bg-red-300 '
               >
                 Delete

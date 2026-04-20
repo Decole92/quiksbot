@@ -13,13 +13,9 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Loader2, Mail, Send, User } from "lucide-react";
 import { updateGuestDetails } from "@/actions/chat";
-import { useGlobalStore } from "@/store/globalStore";
 
 function ContactForm({ id }: { id: string }) {
-  const [feedback, setFeedback] = useGlobalStore((state) => [
-    state.feedback,
-    state.setFeedback,
-  ]);
+  const [feedback, setFeedback] = useState(false);
   const [userDetails, setUserDetails] = useState({ name: "", email: "" });
 
   const [isPending, startTransition] = useTransition();

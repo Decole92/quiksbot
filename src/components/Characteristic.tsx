@@ -4,7 +4,6 @@ import {
   getBot,
 } from "@/actions/bot";
 import { RemovePageAddressById, getBlocks } from "@/actions/user";
-import { useGlobalStore } from "@/store/globalStore";
 import { OctagonX } from "lucide-react";
 import { toast } from "sonner";
 import useSWR from "swr";

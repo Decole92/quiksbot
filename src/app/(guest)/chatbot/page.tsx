@@ -3,7 +3,6 @@ import React, { useEffect, useState, useTransition } from "react";
 import type { ChatBot, ChatMessage } from "@/types";
 import Image from "next/image";
 import { X, XCircle } from "lucide-react";
-import { useGlobalStore } from "@/store/globalStore";
 import { getBot } from "@/actions/bot";
 import { getChatMessages, getChatRoom } from "@/actions/chat";
 import { postToParent } from "@/lib/parseToParent";
@@ -18,19 +17,12 @@ import useFcmToken from "@/hook/useFcmToken";
 import { BASE_URL } from "../../../../constant/url";
 
 export default function ChatBot() {
-  const [chatId, setChatId] = useGlobalStore((state) => [
-    state.chatId,
-    state.setChatId,
-  ]);
+  const [chatId, setChatId] = useState("");
   const { token } = useFcmToken();
   const [botOpened, setBotOpened] = useState(false);
   const [botId, setBotId] = useState<string>("");
   const [showGreeting, setShowGreeting] = useState(true);
   const [isPending, startChatting] = useTransition();
-  const [isOpen, setIsOpen] = useGlobalStore((state) => [
-    state.isOpen,
-    state.setIsOpen,
-  ]);
 
   const { data: bot, mutate: setBot } = useSWR(
     botId ? `/getbot/${botId}` : null,
@@ -67,7 +59,6 @@ export default function ChatBot() {
     const newOpenState = !botOpened;
     setBotOpened(newOpenState);
 
-    // Send message to parent for z-index management
     window.parent.postMessage(
       newOpenState ? "chatbot-opened" : "chatbot-closed",
       "*"
@@ -86,34 +77,29 @@ export default function ChatBot() {
   }, [chatId, mutate, setChatRoom]);
 
   useEffect(() => {
-    // Ensure connection
     if (!socket.connected) {
       socket.connect();
     }
 
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
-        // Reconnect if not connected when tab becomes visible
         if (!socket.connected) {
           socket.connect();
         }
       }
     };
 
-    // Add visibility change listener
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
     if (!chatRoom?.live || !chatId) return;
 
     const handleNewMessage = async (data: any) => {
-      // Prevent duplicate messages
       if (chatMessages?.some((message: any) => message.id === data.id)) return;
 
       await mutate(getChatMessages(chatId));
 
       const updatedMessages = await getChatMessages(chatId);
 
-      // Extract the last message (newest) from the updated list
       const lastMessage = updatedMessages?.[updatedMessages.length - 1];
 
       if (!lastMessage) return;
@@ -169,12 +155,6 @@ export default function ChatBot() {
   }, [botId, setBot]);
 
   useEffect(() => {
-    if (bot) {
-      setIsOpen(bot.getDetails);
-    }
-  }, [bot, setIsOpen]);
-
-  useEffect(() => {
     if (chatMessages) {
       setLocalMessages(chatMessages);
     }
@@ -201,6 +181,7 @@ export default function ChatBot() {
             setBotOpened={(value: boolean) => setBotOpened(value)}
             messages={localMessages}
             setLocalMessages={setLocalMessages}
+            setChatId={setChatId}
           />
           <div className='flex-1 w-full overflow-y-auto '>
             <ChatbotMessages
@@ -217,6 +198,7 @@ export default function ChatBot() {
                 chatbot={bot!}
                 chatId={chatId!}
                 setMessages={setLocalMessages}
+                setChatId={setChatId}
               />
             )}
             <ChatbotInput
@@ -225,6 +207,7 @@ export default function ChatBot() {
               type='user'
               isPageLoading={isPending}
               setMessages={setLocalMessages}
+              setChatId={setChatId}
             />
           </div>
         </div>
@@ -261,7 +244,7 @@ export default function ChatBot() {
             bot?.userMessageBgColor
               ? ""
               : "bg-gray-100 hover:bg-gray-200 dark:bg-gray-800"
-          } 
+          }
            ${!bot ? "cursor-wait" : "cursor-pointer"}
           items-center justify-center h-12 w-12 rounded-full shadow-md flex`}
         >

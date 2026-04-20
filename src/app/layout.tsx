@@ -7,6 +7,7 @@ import { ConvexClerkProvider } from "@/app/providers";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "sonner";
 import Script from "next/script";
+import { MailCampaignProvider } from "@/context/MailCampaignContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -78,7 +79,9 @@ export default async function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              {children}
+              <MailCampaignProvider>
+                {children}
+              </MailCampaignProvider>
 
               <Toaster
                 position='bottom-center'

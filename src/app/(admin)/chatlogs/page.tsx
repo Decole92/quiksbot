@@ -1,8 +1,6 @@
-import ChatInterface from "@/components/ChatInterface";
-import ConversationMenu from "@/components/ConversationMenu";
 import { Metadata } from "next";
-
 import React from "react";
+import ChatlogClient from "./ChatlogClient";
 
 export const metadata: Metadata = {
   title: "Quiksbot | Chatlogs",
@@ -11,16 +9,9 @@ export const metadata: Metadata = {
   keywords:
     "ai chatlogs, export chatbot pdf, CSV chat log export, PDF chat log export, chatbot data management, chatbot analytics, AI chatbot for sales, customer service chatbot, website chatbot embedding, OpenAI API integration, lead generation chatbot, chatbot with PDF interaction, business chatbot automation, export chat data, chatbot performance tracking, AI-powered SalesBot, chatbot chatlog insights, Quiksbot chatbot solutions, export chat history, chatbot for websites",
 };
-function Chatlog() {
-  return (
-    <div className='flex h-full overflow-y-auto lg:overflow-y-clip md:overflow-y-clip lg:max-h-screen md:max-h-screen mt-16 w-full md:max-w-3xl md:mx-auto lg:max-w-6xl lg:mx-auto  '>
-      <ConversationMenu />
 
-      <div className='flex-1 p-8 hidden md:inline-block lg:inline-block '>
-        <ChatInterface />
-      </div>
-    </div>
-  );
+function Chatlog() {
+  return <ChatlogClient />;
 }
 
 export default Chatlog;

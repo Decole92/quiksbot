@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState, useTransition } from "react";
 
 import { MicIcon, ImagePlusIcon, Send, XIcon } from "lucide-react";
-import { useGlobalStore } from "@/store/globalStore";
 import useSWR from "swr";
 import {
   getChatMessages,
@@ -35,10 +34,6 @@ function ChatbotInput({
   const [message, setMessage] = useState("");
   const [isConnected, setIsConnected] = useState(false);
   const [transport, setTransport] = useState("N/A");
-  const [isOpen, setIsOpen] = useGlobalStore((state) => [
-    state.isOpen,
-    state.setIsOpen,
-  ]);
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);

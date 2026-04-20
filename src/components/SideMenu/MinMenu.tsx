@@ -1,18 +1,19 @@
 "use client";
 
+import React from "react";
 import { ChevronsLeft, ChevronsRight, Zap } from "lucide-react";
 import { SIDE_BAR_MENU } from "./Menu";
 import { usePathname, useRouter } from "next/navigation";
-import { useGlobalStore } from "@/store/globalStore";
 
-function MinMenu() {
+interface MinMenuProps {
+  isExtended: boolean;
+  setIsExtended: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function MinMenu({ isExtended, setIsExtended }: MinMenuProps) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [isExtended, setIsExtended] = useGlobalStore((state) => [
-    state.isExtended,
-    state.setIsExtended,
-  ]);
   return (
     <div className='text-black dark:text-gray-400 space-y-20 pt-24 '>
       <ul className='dark:text-gray-400 space-y-8'>

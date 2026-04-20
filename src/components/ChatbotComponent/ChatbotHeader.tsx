@@ -3,7 +3,6 @@
 import Image from "next/image";
 import botIcon from "../../../public/circlegolden.png";
 import { usePathname } from "next/navigation";
-import { useGlobalStore } from "@/store/globalStore";
 import RefreshButton from "../RefreshedButton";
 import { useEffect, useState } from "react";
 
@@ -14,6 +13,8 @@ export default function ChatbotHeader({
   setBotOpened,
   messages,
   setLocalMessages,
+  setChatId,
+  setFeedback,
 }: {
   bot: any;
   live?: boolean;
@@ -21,25 +22,22 @@ export default function ChatbotHeader({
   setBotOpened?: (value: boolean) => void;
   messages?: any[];
   setLocalMessages?: (messages: any[]) => void;
+  setChatId?: (id: string) => void;
+  setFeedback?: (value: boolean) => void;
 }) {
   const pathname = usePathname();
-  const [setChatId, setFeedback] = useGlobalStore((state) => [
-    state.setChatId,
-    state.setFeedback,
-  ]);
   const [lastRefreshed, setLastRefreshed] = useState<Date>(new Date());
   const [count, setCount] = useState(0);
 
   const handleRefresh = async () => {
-    // Simulate an API call
     await new Promise((resolve) => setTimeout(resolve, 1500));
     setLastRefreshed(new Date());
     setCount((prev) => prev + 1);
     if (setBotOpened) {
       setBotOpened(false);
     }
-    setChatId("");
-    setFeedback(false);
+    if (setChatId) setChatId("");
+    if (setFeedback) setFeedback(false);
     if (setLocalMessages) setLocalMessages([]);
   };
 
@@ -86,7 +84,6 @@ export default function ChatbotHeader({
               <RefreshButton
                 onRefresh={handleRefresh}
                 variant='outline'
-                // label='Refresh Data'
                 attentionInterval={3000}
               />
             </>
