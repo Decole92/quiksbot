@@ -41,7 +41,7 @@ function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     <div className='min-h-screen bg-background'>
       <Header />
       <div className='flex w-full'>
-        {/* problem with this <Sidebar /> */}
+        <Sidebar />
         <main className='flex-1'>
           <div className='w-full md:min-h-screen h-full flex flex-col pl-16 md:pl-4'>
             {children}

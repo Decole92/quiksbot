@@ -1,3 +1,5 @@
+"use client";
+
 import { ChevronsLeft, ChevronsRight, Zap } from "lucide-react";
 import React from "react";
 import { SIDE_BAR_MENU } from "./Menu";

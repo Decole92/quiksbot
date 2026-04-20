@@ -1,7 +1,9 @@
+"use client";
+
 import { ChevronsLeft, ChevronsRight, Zap } from "lucide-react";
 import React from "react";
 import { SIDE_BAR_MENU } from "./Menu";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useGlobalStore } from "@/store/globalStore";
 
 function MinMenu() {
