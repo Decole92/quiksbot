@@ -32,12 +32,14 @@
 
 import Header from "@/components/Header";
 import Sidebar from "@/components/SideMenu/Sidebar";
-// import { Toaster } from "@/components/ui/toaster";
+import { StoreHydration } from "@/components/storeRehydration";
+import { Toaster } from "@/components/ui/toaster";
 import React from "react";
 
 function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className='min-h-screen bg-background'>
+      <StoreHydration />
       <Header />
       <div className='flex w-full'>
         <Sidebar />
@@ -47,7 +49,7 @@ function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
           </div>
         </main>
       </div>
-      {/* <Toaster /> */}
+      <Toaster />
     </div>
   );
 }

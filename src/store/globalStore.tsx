@@ -83,7 +83,8 @@ export const useGlobalStore = create<BoardState>()(
       }),
       {
         name: "saasStorage",
-      }
-    )
-  )
+        skipHydration: true,
+      },
+    ),
+  ),
 );
