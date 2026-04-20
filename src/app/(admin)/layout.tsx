@@ -32,7 +32,7 @@
 
 import Header from "@/components/Header";
 import Sidebar from "@/components/SideMenu/Sidebar";
-import { Toaster } from "@/components/ui/toaster";
+// import { Toaster } from "@/components/ui/toaster";
 import React from "react";
 
 function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -47,7 +47,7 @@ function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
           </div>
         </main>
       </div>
-      <Toaster />
+      {/* <Toaster /> */}
     </div>
   );
 }
